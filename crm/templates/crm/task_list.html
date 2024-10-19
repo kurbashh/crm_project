@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% for task in tasks %}
+    <h2>{{ task.title }}</h2>
+    <p>{{ task.description }}</p>
+    <p>Status: {{ task.status }}</p>
+    <p>Deadline: {{ task.deadline }}</p>
+    <hr>
+    <a href="{% url 'task_manage' task.id %}"><button class="btn btn-primary">Check</button></a>
+{% endfor %}
+{% endblock %}
