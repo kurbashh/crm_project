@@ -1,12 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
-{% for task in tasks %}
-    <h2>{{ task.title }}</h2>
-    <p>{{ task.description }}</p>
-    <p>Status: {{ task.status }}</p>
-    <p>Deadline: {{ task.deadline }}</p>
-    <hr>
-    <a href="{% url 'task_manage' task.id %}"><button class="btn btn-primary">Check</button></a>
-{% endfor %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Task Management</h1>
+    <div class="row">
+        {% for task in tasks %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ task.title }}</h5>
+                        <p class="card-text">{{ task.description|truncatewords:20 }}</p>
+                        <p class="text-muted">Status: <span class="badge 
+                            {% if task.status == 'not started' %}badge-secondary
+                            {% elif task.status == 'in progress' %}badge-warning
+                            {% else %}badge-success{% endif %}">
+                            {{ task.status }}
+                        </span></p>
+                        <p class="text-muted">Deadline: {{ task.deadline|date:"F j, Y, g:i a" }}</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="{% url 'task_manage' task.id %}" class="btn btn-primary">Check</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
